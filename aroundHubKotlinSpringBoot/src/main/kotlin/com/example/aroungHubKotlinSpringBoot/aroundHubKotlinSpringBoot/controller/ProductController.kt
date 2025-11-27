@@ -2,8 +2,11 @@ package com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.controll
 
 import com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.data.dto.ProductDto
 import com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.service.ProductService
+import jakarta.validation.Valid
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -35,13 +38,22 @@ class ProductController(
     }
 
     @PostMapping("/product")
-    fun createProduct(@RequestBody productDto: ProductDto) : ProductDto{
+    fun createProduct(@Valid @RequestBody productDto: ProductDto) : ResponseEntity<ProductDto>{
         val productId: String = productDto.productId!!
         val productName: String = productDto.productName!!
         val productPrice: Int = productDto.productPrice!!
         val productStock: Int = productDto.productStock!!
 
-        return productService.saveProduct(productId, productName, productPrice, productStock)
+        val response : ProductDto = productService.saveProduct(productId, productName, productPrice, productStock)
+
+        LOGGER.info(
+                "[createProduct] Response >> productId : {}, productName : {}, productPrice : {}, productStock : {}",
+                response.productId,
+                response.productName,
+                response.productPrice,
+                response.productStock)
+
+        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     @DeleteMapping("/product/{productId}")

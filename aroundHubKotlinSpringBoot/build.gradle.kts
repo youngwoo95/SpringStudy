@@ -33,6 +33,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // MySQL 드라이버
     runtimeOnly("com.mysql:mysql-connector-j")
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     // Swagger (springdoc-openapi)
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
