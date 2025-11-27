@@ -1,5 +1,7 @@
 package com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.controller;
 
+import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.common.Constants;
+import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.common.exception.AroundHubException;
 import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.data.dto.ProductDto;
 import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.service.ProductService;
 import jakarta.validation.Valid;
@@ -64,5 +66,11 @@ public class ProductController {
     public ProductDto deleteProduct(@PathVariable String productId){
         return null;
     }
+
+    @PostMapping(value = "/product/exception")
+    public void exceptionTest() throws AroundHubException{
+        throw new AroundHubException(Constants.ExceptionClass.PRODUCT, HttpStatus.FORBIDDEN, "접근이 금지되었습니다.");
+    }
+
 
 }
