@@ -2,17 +2,36 @@ package com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.controll
 
 import com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.data.dto.ProductDto
 import com.example.aroungHubKotlinSpringBoot.aroundHubKotlinSpringBoot.service.ProductService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/product-api")
 class ProductController(
-    val productService: ProductService
+    val productService: ProductService,
+    val LOGGER: Logger = LoggerFactory.getLogger(ProductController::class.java)
 ) {
 
     @GetMapping("/product/{productId}")
     fun getProduct(@PathVariable productId: String) : ProductDto{
-        return productService.getProduct(productId)
+
+        val startTime : Long = System.currentTimeMillis()
+
+        LOGGER.info("[ProductController] perform {} of Aroung Hub API.", "getProduct")
+
+        val productDto = productService.getProduct(productId)
+
+        LOGGER.info(
+            "[ProductController] Response :: productId = {}, productName = {}, productPrice = {}, productStock = {}, Response Time = {}ms",
+            productDto.productId!!,
+            productDto.productName!!,
+            productDto.productPrice!!,
+            productDto.productStock!!,
+            (System.currentTimeMillis() - startTime)
+        )
+
+        return productDto
     }
 
     @PostMapping("/product")
