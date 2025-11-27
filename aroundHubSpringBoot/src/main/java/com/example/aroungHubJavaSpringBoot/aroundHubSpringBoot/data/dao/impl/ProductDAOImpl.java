@@ -4,7 +4,9 @@ import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.data.dao.ProductD
 import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.data.entity.ProductEntity;
 import com.example.aroungHubJavaSpringBoot.aroundHubSpringBoot.data.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductDAOImpl implements ProductDAO {
 
     ProductRepository productRepository;
